@@ -37,12 +37,7 @@ export default function Home() {
     <main className={styles.main}>
       <h1>Web3Auth login with Google</h1>
       <div className={styles.center}>
-        <Flex
-          className={styles.container}
-          sx={{
-            flexDirection: "column",
-          }}
-        >
+        <div className={styles.container}>
           <Flex
             sx={{
               flexDirection: "column",
@@ -103,7 +98,7 @@ export default function Home() {
               </Grid>
             ) : null}
           </Flex>
-        </Flex>
+        </div>
       </div>
     </main>
   )

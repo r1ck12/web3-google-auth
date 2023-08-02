@@ -27,8 +27,8 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
 
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(to bottom right, rgba(1, 65, 255, 0), rgba(1, 65, 255, 0), rgba(1, 65, 255, 0.3));
+    --primary-glow: radial-gradient(rgba(255, 1, 247, 0.4), rgba(183, 1, 255, 0));
+    --secondary-glow: linear-gradient(to bottom right, rgba(170, 1, 255, 0),rgba(158, 1, 255, 0)), rgba(242, 1, 255, 0.3);
 
     --tile-start-rgb: 2, 13, 46;
     --tile-end-rgb: 2, 5, 19;

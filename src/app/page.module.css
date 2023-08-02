@@ -85,7 +85,7 @@
   border-radius: 50%;
   width: 480px;
   height: 360px;
-  margin-left: -400px;
+  margin-left: -250px;
 }
 
 .center::after {
@@ -100,7 +100,7 @@
   content: "";
   left: 50%;
   position: absolute;
-  filter: blur(45px);
+  filter: blur(120px);
   transform: translateZ(0);
 }
 
