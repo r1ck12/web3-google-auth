@@ -1,3 +1,9 @@
+## Web3 Google Auth
+
+This project uses NextJS with NextAuth to create a Web3 [Web3Auth](https://web3auth.io/docs) SFA Authentication using a Google login.
+
+Stack: NextJS, NextAuth, React, Typescript, Web3Auth SFA Core Kit, Google OAuth2.0, Ethers.js, Theme-UI.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -29,6 +35,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the
+[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
