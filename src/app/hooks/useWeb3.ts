@@ -35,8 +35,16 @@ const useWeb3 = () => {
     }
   }
 
+  const getAccountPrivateKey = async (web3AuthProvider: SafeEventEmitterProvider): Promise<any> => {
+    const ethPrivateKey = await web3AuthProvider.request({ method: "eth_private_key" })
+
+    return ethPrivateKey
+  }
+
+
   return {
     getAccountAddress,
+    getAccountPrivateKey,
     getBalance,
   }
 }

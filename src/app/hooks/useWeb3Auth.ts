@@ -46,13 +46,8 @@ const useWeb3Auth = () => {
             idToken: user.id,
           })
 
-          if (web3AuthProvider) {
+          if (web3AuthProvider && web3Auth.sessionId) {
             setWeb3AuthProvider(web3AuthProvider)
-            const ethPrivateKey = await web3AuthProvider.request({ method: "eth_private_key" })
-            console.log(ethPrivateKey)
-          }
-
-          if (web3Auth.sessionId) {
             setLoggedIn(true)
             setIsLoading(false)
           } else {
