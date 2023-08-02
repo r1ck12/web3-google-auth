@@ -1,11 +1,11 @@
 "use client"
 import styles from "./page.module.css"
 import { useEffect, useState } from "react"
-import { SessionContextValue, useSession } from "next-auth/react"
+import { SessionContextValue, signOut, useSession } from "next-auth/react"
 import { CustomSession } from "./api/auth/[...nextauth]/route"
 import Link from "next/link"
 import useWeb3Auth from "./hooks/useWeb3Auth"
-import { Avatar, Box, Button, Flex } from "theme-ui"
+import { Avatar, Box, Button, Flex, Spinner } from "theme-ui"
 import Image from "next/image"
 import useWeb3 from "./hooks/useWeb3"
 
@@ -15,10 +15,10 @@ export type SessionContext = Omit<SessionContextValue, "data"> & {
 
 export default function Home() {
   const session = useSession() as SessionContext
-  const { initWeb3Auth, web3Auth, web3AuthProvider, loggedIn } = useWeb3Auth()
+  const { initWeb3Auth, web3Auth, web3AuthProvider, loggedIn, isLoading } = useWeb3Auth()
   const { getAccount } = useWeb3()
   const [account, setAccounts] = useState(null)
-
+  console.log(session)
   useEffect(() => {
     if (!loggedIn) initWeb3Auth(session)
   }, [session.status, web3Auth?.ready])
@@ -34,12 +34,14 @@ export default function Home() {
       <h1>Web3Auth login with Google</h1>
       <div className={styles.center}>
         <div className={styles.container}>
-          <Flex sx={{
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "1em"
-          }}>
+          <Flex
+            sx={{
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "1em",
+            }}
+          >
             {loggedIn && session.data && session.data.user ? (
               <Flex
                 sx={{
@@ -51,15 +53,18 @@ export default function Home() {
                 {session?.data?.user?.name ? <h2>Welcome, {session.data.user.name}</h2> : null}
               </Flex>
             ) : null}
-            <Flex sx={{
-              gap: "1em"
-            }}>
-              {!loggedIn ? (
+            <Flex
+              sx={{
+                gap: "1em",
+              }}
+            >
+              {isLoading ? <Spinner /> : null}
+              {!loggedIn && !isLoading ? (
                 <Link href="/api/auth/signin">
                   <Button>Login</Button>
                 </Link>
               ) : null}
-              {loggedIn ? <Button>Logout</Button> : null}
+              {loggedIn ? <Button onClick={() => signOut()}>Logout</Button> : null}
               {loggedIn ? (
                 <Button variant="secondary" onClick={getUserInfo}>
                   GetUserInfo
