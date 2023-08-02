@@ -5,7 +5,7 @@ import { SessionContextValue, signOut, useSession } from "next-auth/react"
 import { CustomSession } from "./api/auth/[...nextauth]/route"
 import Link from "next/link"
 import useWeb3Auth from "./hooks/useWeb3Auth"
-import { Avatar, Box, Button, Flex, Spinner } from "theme-ui"
+import { Avatar, Box, Button, Flex, Grid, Spinner } from "theme-ui"
 import Image from "next/image"
 import useWeb3 from "./hooks/useWeb3"
 
@@ -16,16 +16,18 @@ export type SessionContext = Omit<SessionContextValue, "data"> & {
 export default function Home() {
   const session = useSession() as SessionContext
   const { initWeb3Auth, web3Auth, web3AuthProvider, loggedIn, isLoading } = useWeb3Auth()
-  const { getAccount } = useWeb3()
+  const { getAccountAddress, getBalance } = useWeb3()
   const [account, setAccounts] = useState(null)
-  console.log(session)
+  const [balance, setBalance] = useState(null)
+
   useEffect(() => {
     if (!loggedIn) initWeb3Auth(session)
   }, [session.status, web3Auth?.ready])
 
   const getUserInfo = async () => {
     if (web3AuthProvider) {
-      setAccounts(await getAccount(web3AuthProvider))
+      setAccounts(await getAccountAddress(web3AuthProvider))
+      setBalance(await getBalance(web3AuthProvider))
     }
   }
 
@@ -67,11 +69,26 @@ export default function Home() {
               {loggedIn ? <Button onClick={() => signOut()}>Logout</Button> : null}
               {loggedIn ? (
                 <Button variant="secondary" onClick={getUserInfo}>
-                  GetUserInfo
+                  Get Account info
                 </Button>
               ) : null}
             </Flex>
-            <Flex>{account ? <Box>Public Address: {account}</Box> : null}</Flex>
+            {account ? (
+              <Grid gap={2} columns={[2, "1fr 2fr"]}>
+                <Box bg="secondary" p=".2em .5em">
+                  Public Address
+                </Box>
+                <Box bg="muted" color="text" p=".2em .5em">
+                  {account}
+                </Box>
+                <Box bg="secondary" p=".2em .5em">
+                  Balance
+                </Box>
+                <Box bg="muted" color="text" p=".2em .5em">
+                  {balance}
+                </Box>
+              </Grid>
+            ) : null}
           </Flex>
         </div>
       </div>
