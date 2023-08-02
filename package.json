@@ -17,6 +17,7 @@
     "@web3auth/single-factor-auth": "^6.4.1",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "ethers": "^6.6.7",
     "jsonwebtoken": "8.5.1",
     "next": "13.4.12",
     "next-auth": "^4.22.3",
