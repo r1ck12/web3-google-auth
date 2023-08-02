@@ -5,7 +5,7 @@ import { SessionContextValue, useSession } from "next-auth/react"
 import { CustomSession } from "./api/auth/[...nextauth]/route"
 import Link from "next/link"
 import useWeb3Auth from "./hooks/useWeb3Auth"
-import { Flex } from "theme-ui"
+import { Avatar, Button, Flex } from "theme-ui"
 import Image from "next/image"
 
 export type SessionContext = Omit<SessionContextValue, "data"> & {
@@ -29,20 +29,20 @@ export default function Home() {
             <Flex
               sx={{
                 alignItems: "center",
-                gap: "1em"
+                gap: "1em",
               }}
             >
-              {session?.data?.user?.image ? <Image alt="Profile image" src={session.data.user.image} width={50} height={50} style={{ borderRadius: "50%" }} /> : null}
+              {session?.data?.user?.image ? <Avatar src={session.data.user.image} /> : null}
               {session?.data?.user?.name ? <h2>Welcome, {session.data.user.name}</h2> : null}
             </Flex>
           ) : null}
           {!loggedIn ? (
             <Link href="/api/auth/signin">
-              <button>Login</button>
+              <Button>Login</Button>
             </Link>
           ) : null}
-          {loggedIn ? <button>Logout</button> : null}
-          <button>GetUserInfo</button>
+          {loggedIn ? <Button>Logout</Button> : null}
+          {loggedIn ? <Button variant="secondary">GetUserInfo</Button> : null}
         </div>
       </div>
     </main>
