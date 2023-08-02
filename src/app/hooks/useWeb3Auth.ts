@@ -2,6 +2,7 @@ import Web3Auth from "@web3auth/single-factor-auth"
 import { useState } from "react"
 import { SessionContext } from "../page"
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider"
+import { SafeEventEmitterProvider } from "@web3auth/base"
 
 const provider = new EthereumPrivateKeyProvider({
   config: {
@@ -18,6 +19,7 @@ const provider = new EthereumPrivateKeyProvider({
 
 const useWeb3Auth = () => {
   const [web3Auth, setWeb3Auth] = useState<Web3Auth | null>(null)
+  const [web3AuthProvider, setWeb3AuthProvider] = useState<SafeEventEmitterProvider | null>(null)
   const [loggedIn, setLoggedIn] = useState(false)
 
   const initWeb3Auth = async (session: SessionContext) => {
@@ -35,14 +37,15 @@ const useWeb3Auth = () => {
 
       if (web3Auth && web3Auth.ready) {
         try {
-          const web3AuthSfaProvider = await web3Auth.connect({
+          const web3AuthProvider = await web3Auth.connect({
             verifier: "google-testnet-0101",
             verifierId: user.email,
             idToken: user.id,
           })
 
-          if (web3AuthSfaProvider) {
-            const ethPrivateKey = await web3AuthSfaProvider.request({ method: "eth_private_key" })
+          if (web3AuthProvider) {
+            setWeb3AuthProvider(web3AuthProvider)
+            const ethPrivateKey = await web3AuthProvider.request({ method: "eth_private_key" })
             console.log(ethPrivateKey)
           }
 
@@ -61,6 +64,7 @@ const useWeb3Auth = () => {
   return {
     initWeb3Auth,
     web3Auth,
+    web3AuthProvider,
     loggedIn,
   }
 }
