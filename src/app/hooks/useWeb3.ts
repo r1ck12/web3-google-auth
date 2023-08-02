@@ -1,23 +1,43 @@
 import { SafeEventEmitterProvider } from "@web3auth/base"
-import { ethers } from "ethers";
+import { ethers, formatEther } from "ethers"
 
 const useWeb3 = () => {
-  const getAccount = async (web3AuthProvider: SafeEventEmitterProvider): Promise<any> => {
+  const getAccountAddress = async (web3AuthProvider: SafeEventEmitterProvider): Promise<any> => {
     try {
-      const ethersProvider = new ethers.BrowserProvider(web3AuthProvider);
+      const ethersProvider = new ethers.BrowserProvider(web3AuthProvider)
 
-      const signer = await ethersProvider.getSigner();
+      const signer = await ethersProvider.getSigner()
 
-      const address = signer.getAddress();
+      const address = signer.getAddress()
 
-      return await address;
-    } catch (error) {
-      return error;
+      return await address
+    } catch (e) {
+      console.error(e)
+      return e
+    }
+  }
+
+  const getBalance = async (web3AuthProvider: SafeEventEmitterProvider): Promise<any> => {
+    try {
+      const ethersProvider = new ethers.BrowserProvider(web3AuthProvider)
+
+      const signer = await ethersProvider.getSigner()
+
+      const account = await signer.getAddress()
+      // Get user's balance in ether
+      const balance = await ethersProvider.getBalance(account)
+
+      const formattedBalance = formatEther(balance)
+      return formattedBalance
+    } catch (e) {
+      console.error(e)
+      return e
     }
   }
 
   return {
-    getAccount
+    getAccountAddress,
+    getBalance,
   }
 }
 
