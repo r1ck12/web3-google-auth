@@ -5,6 +5,8 @@ import { SessionContextValue, useSession } from "next-auth/react"
 import { CustomSession } from "./api/auth/[...nextauth]/route"
 import Link from "next/link"
 import useWeb3Auth from "./hooks/useWeb3Auth"
+import { Flex } from "theme-ui"
+import Image from "next/image"
 
 export type SessionContext = Omit<SessionContextValue, "data"> & {
   data: CustomSession
@@ -23,6 +25,17 @@ export default function Home() {
       <h1>Web3Auth login with Google</h1>
       <div className={styles.center}>
         <div className={styles.container}>
+          {loggedIn && session.data && session.data.user ? (
+            <Flex
+              sx={{
+                alignItems: "center",
+                gap: "1em"
+              }}
+            >
+              {session?.data?.user?.image ? <Image alt="Profile image" src={session.data.user.image} width={50} height={50} style={{ borderRadius: "50%" }} /> : null}
+              {session?.data?.user?.name ? <h2>Welcome, {session.data.user.name}</h2> : null}
+            </Flex>
+          ) : null}
           {!loggedIn ? (
             <Link href="/api/auth/signin">
               <button>Login</button>
